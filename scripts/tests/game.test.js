@@ -3,7 +3,8 @@
  */
 
 const exp = require('constants');
-const { game, newGame, showScore } = require('../game.js');
+const { game, newGame, showScore, addTurn, lightsOn } = require('../game.js');
+const { afterEach } = require('node:test');
 
 beforeAll(() =>{
     let fs = require('fs');
@@ -46,10 +47,35 @@ describe("newGame function works correctly", () => {
     test("should set playerMoves to empty array", ()=>{
         expect(game.playerMoves.length).toBe(0);
     });
-    test("should set currentGame to empty array", ()=>{
-        expect(game.currentGame.length).toBe(0);
+    test("there should be one element in currentGame array", ()=>{
+        expect(game.currentGame.length).toBe(1);
     });
     test("should display 0 fore elemnt with id of score", ()=>{
         expect(document.getElementById("score").innerText).toBe(0);
+    });
+});
+
+describe("gameplay works correctly", () =>{
+    beforeEach(() => {
+        game.score = 0;
+        game.currentGame = [];
+        game.playerMoves = [];
+        addTurn();
+    });
+
+    afterEach(() => {
+        game.score = 0;
+        game.currentGame = [];
+        game.playerMoves = [];
+    });
+
+    test("addTurn adds a new turn to the game", () => {
+        addTurn();
+        expect(game.currentGame.length).toBe(2);
+    });
+    test("should add correct class to light up buttons", () => {
+        let button = document.getElementById(game.currentGame[0]);
+        lightsOn(game.currentGame[0]);
+        expect(button.classList).toContain("light");
     });
 });
