@@ -53,8 +53,17 @@ describe("newGame function works correctly", () => {
     test("there should be one element in currentGame array", ()=>{
         expect(game.currentGame.length).toBe(1);
     });
-    test("should display 0 fore elemnt with id of score", ()=>{
+    test("should display 0 for element with id of score", ()=>{
         expect(document.getElementById("score").innerText).toBe(0);
+    });
+    test("expect data-listener to be true", () =>{
+        const elements = document.getElementsByClassName("circle");
+        const trueElements = Object.values(elements).filter(element => element.getAttribute("data-listener") === "true");
+        expect(trueElements.length).toBe(elements.length);
+
+        // for (let element of elements){
+        //     expect(element.getAttribute("data-listener")).toEqual(true);
+        // }
     });
 });
 
