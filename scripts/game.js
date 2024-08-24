@@ -16,17 +16,17 @@ function newGame() {
   game.playerMoves = [];
   game.currentGame = [];
 
-//   Object.values(document.getElementsByClassName("circle")).map((circle) => {
-//     if (circle.getAttribute("data-listener") !== "true") {
-//         circle.addEventListener("click", (e) => {
-//           let move = e.target.getAttribute("id");
-//           lightsOn(move);
-//           game.playerMoves.push(move);
-//           playerTurn();
-//         });
-//         circle.setAttribute("data-listener", "true");
-//       }
-//   });
+  //   Object.values(document.getElementsByClassName("circle")).map((circle) => {
+  //     if (circle.getAttribute("data-listener") !== "true") {
+  //         circle.addEventListener("click", (e) => {
+  //           let move = e.target.getAttribute("id");
+  //           lightsOn(move);
+  //           game.playerMoves.push(move);
+  //           playerTurn();
+  //         });
+  //         circle.setAttribute("data-listener", "true");
+  //       }
+  //   });
 
   for (let circle of document.getElementsByClassName("circle")) {
     if (circle.getAttribute("data-listener") !== "true") {
@@ -66,10 +66,32 @@ function showTurns() {
   let turns = setInterval(() => {
     lightsOn(game.currentGame[game.turnNumber]);
     game.turnNumber++;
-    if ((game.turnNumber >= game, currentGame.length)) {
+    if ((game.turnNumber >= game.currentGame.length)) {
       clearInterval(turns);
     }
   }, 800);
 }
 
-module.exports = { game, newGame, showScore, addTurn, lightsOn, showTurns };
+function playerTurn() {
+  let i = game.playerMoves.length - 1;
+  if (game.currentGame[i] === game.playerMoves[i]) {
+    if (game.currentGame.length === game.playerMoves.length) {
+      game.score++;
+      showScore();
+      addTurn();
+    }
+  } else {
+    alert("Wrong Move!");
+    newGame();
+  }
+}
+
+module.exports = {
+  game,
+  newGame,
+  showScore,
+  addTurn,
+  lightsOn,
+  showTurns,
+  playerTurn,
+};
